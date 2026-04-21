@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simone Wille — Art Historian</title>
+  <style>
+    /* ── Base Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --cream:    #faf8f5;
+      --white:    #ffffff;
+      --ink:      #1a1a1a;
+      --mid:      #4a4a4a;
+      --light:    #8a8a8a;
+      --rule:     #e2ddd7;
+      --accent:   #7a6652;
+      --accent-l: #c4b8aa;
+      --nav-h:    64px;
+    }
+
+    /* ── Typography ── */
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .serif { font-family: 'EB Garamond', Georgia, serif; }
+
+    /* ── Sticky Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .nav-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: calc(100vh - var(--nav-h));
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(1rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 8vw, 6rem);
+      align-items: start;
+      padding-top: clamp(4rem, 7vw, 6rem);
+    }
+
+    .hero-text { padding-right: 4rem; }
+
+    .hero-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .hero-categories {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-tagline {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.65;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { background: #6a5744; border-color: #6a5744; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent-l);
+    }
+    .btn-outline:hover { border-color: var(--accent); background: rgba(122,102,82,0.05); }
+
+    /* ── Portrait ── */
+    .hero-portrait {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .portrait-frame {
+      width: min(340px, 90%);
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* ── Sections ── */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 0.3rem;
+    }
+
+    .section-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .section-body {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    /* ── About Section ── */
+    .about-text {
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--mid);
+    }
+
+    .about-text p { margin-bottom: 1.25rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-links {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── Work Section ── */
+    #work { background: var(--white); max-width: 100%; }
+    #work > .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .book-cover {
+      aspect-ratio: 2/3;
+      background: linear-gradient(160deg, var(--rule) 0%, var(--accent-l) 100%);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 6px 20px rgba(0,0,0,0.1), 1px 2px 4px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover:hover {
+      transform: translateY(-4px) rotate(0.5deg);
+      box-shadow: 8px 12px 32px rgba(0,0,0,0.14);
+    }
+
+    .book-cover-1 { background: #eee; }
+    .book-cover-2 { background: #eee; }
+    .book-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .book-cover-3 { background: linear-gradient(160deg, #7a8898 0%, #4a5868 100%); }
+    .book-cover-4 { background: linear-gradient(160deg, #908878 0%, #605848 100%); }
+
+    .book-cover-text {
+      padding: 1.5rem;
+      text-align: center;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .book-cover-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-cover-pub {
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    .book-meta { padding: 0 0.25rem; }
+
+    .book-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+
+    .book-info {
+      font-size: 0.78rem;
+      color: var(--light);
+      line-height: 1.5;
+    }
+
+    /* Articles */
+    .articles-heading {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .article-list { list-style: none; }
+
+    .article-item {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .article-year {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+      padding-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .article-details { }
+
+    .article-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.02rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 0.25rem;
+    }
+
+    .article-venue {
+      font-size: 0.8rem;
+      color: var(--light);
+    }
+
+    /* ── In Progress ── */
+    .progress-card {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .progress-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-funder {
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .progress-desc {
+      font-size: 0.9rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .progress-team {
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--light);
+    }
+
+    .progress-team strong { color: var(--mid); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem;
+      color: var(--mid);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--light);
+    }
+
+    /* ── Smooth Scroll & Active Nav ── */
+    html { scroll-behavior: smooth; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text { padding-right: 0; }
+
+      .hero-tagline { margin: 0 auto 2rem; }
+
+      .hero-links { justify-content: center; }
+
+      .hero-portrait { order: -1; }
+
+      .portrait-frame { width: min(260px, 80%); }
+
+      .section-header,
+      .section-body { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .section-label { display: none; }
+
+      .books-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+      .article-item { grid-template-columns: 50px 1fr; gap: 1rem; }
+
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .books-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { gap: 1.5rem; }
+    }
+
+    /* ── Subtle fade-in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-text > * {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-text > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-text > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero-text > *:nth-child(3) { animation-delay: 0.18s; }
+    .hero-text > *:nth-child(4) { animation-delay: 0.24s; }
+    .hero-text > *:nth-child(5) { animation-delay: 0.30s; }
+
+    .hero-portrait {
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ Navigation ══ -->
+  <nav>
+    <a href="#top" class="nav-name">Simone Wille</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#in-progress">In Progress</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ Hero ══ -->
+  <div class="hero" id="top">
+    <div class="hero-text">
+      <h1 class="hero-name">Simone Wille</h1>
+      <p class="hero-tagline">
+        For three decades now, my research and teaching have mainly focused on transnational modernism, Cold War cultural exchange, and the global histories of South Asian art more broadly.
+      </p>
+      <div class="hero-links">
+        <a href="https://www.uibk.ac.at/en/projects/south-asia-in-central-europe/" target="_blank" rel="noopener" class="btn btn-primary">University Profile</a>
+        <a href="https://uibk.academia.edu/SimoneWille" target="_blank" rel="noopener" class="btn btn-outline">Publications</a>
+      </div>
+    </div>
+
+    <div class="hero-portrait">
+      <div class="portrait-frame">
+        <img src="portrait.jpg" alt="Simone Wille" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ About ══ -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-label">About</span>
+      <h2 class="section-title">Research &amp; Approach</h2>
+    </div>
+    <div class="section-body">
+      <div><!-- spacer column --></div>
+      <div class="about-text">
+        <p>
+          From my training in Art History (MPhil and PhD) to my research-driven practice, I have developed a strong expertise combining historical and archival methods, critical theory, and art historical methods of formal analysis with close readings of textual sources. Combined with many years of fieldwork in regions spanning South and West Asia, and Europe, including East and Central Europe, I have built a collection of personal empirical knowledge and developed an integrative approach to the study of critical global art history. This provides an analytical entry to the key political and ideological concepts of the historical period under study.
+        </p>
+        <p>
+          In considering elements of the aesthetics of art, political thought, ideological positionings, transcultural exchange in connection with cultural mobility and socialist internationalism, I provide an important model for thinking internationalism beyond North Atlantic narratives.
+        </p>
+        <p>
+          My monograph <em>Modern Art in Pakistan</em> (Routledge, 2015) introduced this method by conceptualising and establishing genealogical links between modernism and different historical and political settings. Two key publications followed, one marking the beginning of a longstanding collaboration with Prof. Parul Dave Mukherji and Jawaharlal Nehru University (JNU) in New Delhi: <em>Visual Arts in South Asia</em> (co-authored with Mukherji et al., 2015) and <em>A Short History of Art in Pakistan</em> (co-edited by Mitter, Mukherji et al., 2023).
+        </p>
+        <p>
+          I have also developed the concept of <em>migratory aesthetics</em> via my 2023 article on "The Significance of Mobility and the Artistic Practice of Zahoor ul Akhlaq" in <em>The Journal of Transcultural Studies</em>, and 'immobile mobility' via Chittaprosad's socialist internationalism in "A Transnational Socialist Solidarity" (<em>Stedelijk Studies</em>, 2019).
+        </p>
+        <p>
+          My monograph <em>Cold War Art Worlds: South Asian Art and Artists in Prague</em> (Leuven University Press, 2025) further conceptualises ways to connect the fields of art, Cold War studies, and critical global modernism, bringing in entirely new archival material. With the research-led collaborative work that produced the co-edited volume <em>André Lhote and His International Students</em> (Innsbruck University Press, 2020), I developed a method combining multilingual, transnational sources from several under-researched archives to enable multipolar work around a singular site.
+        </p>
+
+        <div class="about-links">
+          <a href="https://www.uibk.ac.at/en/projects/south-asia-in-central-europe/" target="_blank" rel="noopener" class="btn btn-outline">University of Innsbruck</a>
+          <a href="https://uibk.academia.edu/SimoneWille" target="_blank" rel="noopener" class="btn btn-outline">Full CV &amp; Publications</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Work ══ -->
+  <div id="work">
+    <div class="section-inner">
+      <section style="border-top: none; padding-top: 0; max-width: none; margin: 0; padding-left: 0; padding-right: 0;">
+
+        <div class="section-header">
+          <span class="section-label">Work</span>
+          <h2 class="section-title">Books &amp; Publications</h2>
+        </div>
+
+        <!-- Books -->
+        <div class="section-body" style="margin-bottom: 3.5rem;">
+          <div><!-- spacer --></div>
+          <div>
+            <div class="books-grid">
+
+              <div class="book-card">
+                <a href="https://www.routledge.com/Modern-Art-in-Pakistan/Wille/p/book/9781138777941" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <div class="book-cover book-cover-1">
+                    <img src="modern-art-pakistan.jpg" alt="Modern Art in Pakistan book cover" />
+                  </div>
+                </a>
+                <div class="book-meta">
+                  <p class="book-title">Modern Art in Pakistan</p>
+                  <p class="book-info">Routledge, 2015<br>History, tradition, and modernism in Pakistan from the 1950s onward.</p>
+                </div>
+              </div>
+
+              <div class="book-card">
+                <a href="https://lup.be/book/cold-war-art-worlds/" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <div class="book-cover book-cover-2">
+                    <img src="cold-war-art-worlds.jpg" alt="Cold War Art Worlds book cover" />
+                  </div>
+                </a>
+                <div class="book-meta">
+                  <p class="book-title">Cold War Art Worlds</p>
+                  <p class="book-info">Leuven University Press / Cornell University Press<br>Mobility of South Asian art and artists to Prague, 1947–1989.</p>
+                </div>
+              </div>
+
+              <div class="book-card">
+                <a href="https://www.uibk.ac.at/iup/buch_pdfs/9783903187788.pdf" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <div class="book-cover book-cover-3">
+                    <div class="book-cover-text">
+                      <div class="book-cover-title">André Lhote and His International Students</div>
+                      <div class="book-cover-pub">Innsbruck UP · 2020</div>
+                    </div>
+                  </div>
+                </a>
+                <div class="book-meta">
+                  <p class="book-title">André Lhote and His International Students</p>
+                  <p class="book-info">Co-edited with Zeynep Kuban · Innsbruck University Press, 2020<br>Lhote's influence on global modernist developments.</p>
+                </div>
+              </div>
+
+              <div class="book-card">
+                <a href="https://lup.be/book/collecting-asian-art/" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <div class="book-cover book-cover-4">
+                    <div class="book-cover-text">
+                      <div class="book-cover-title">Collecting Asian Art</div>
+                      <div class="book-cover-pub">Leuven UP · 2023</div>
+                    </div>
+                  </div>
+                </a>
+                <div class="book-meta">
+                  <p class="book-title">Collecting Asian Art</p>
+                  <p class="book-info">Co-edited with Markéta Hánová &amp; Yuka Kadoi · Leuven University Press, 2023<br>Cultural politics &amp; transregional networks in 20th-century Central Europe.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Articles -->
+        <div class="section-body">
+          <div><!-- spacer --></div>
+          <div>
+            <h3 class="articles-heading">Selected Articles &amp; Chapters</h3>
+            <ul class="article-list">
+
+              <li class="article-item">
+                <span class="article-year">2023</span>
+                <div class="article-details">
+                  <p class="article-title">The Significance of Mobility and the Artistic Practice of Zahoor ul Akhlaq</p>
+                  <p class="article-venue"><em>Journal of Transcultural Studies</em> — guest-edited volume on Transcultural Mobility</p>
+                </div>
+              </li>
+
+              <li class="article-item">
+                <span class="article-year">2023</span>
+                <div class="article-details">
+                  <p class="article-title">The Prague Connection of Chittaprosad (1915–1978)</p>
+                  <p class="article-venue">In <em>20th Century Indian Art: Moderns, Post-Independence, Contemporary</em>, Thames and Hudson</p>
+                </div>
+              </li>
+
+              <li class="article-item">
+                <span class="article-year">2020</span>
+                <div class="article-details">
+                  <p class="article-title">Chittaprosad in the Collection of the National Gallery Prague</p>
+                  <p class="article-venue"><em>Bulletin of the National Gallery Prague</em>, 6–21</p>
+                </div>
+              </li>
+
+              <li class="article-item">
+                <span class="article-year">2019</span>
+                <div class="article-details">
+                  <p class="article-title">A Transnational Socialist Solidarity: Chittaprosad's Immobile Mobility</p>
+                  <p class="article-venue"><em>Stedelijk Studies</em></p>
+                </div>
+              </li>
+
+              <li class="article-item">
+                <span class="article-year">2015</span>
+                <div class="article-details">
+                  <p class="article-title">Visual Arts in South Asia</p>
+                  <p class="article-venue">Co-authored with Parul Dave Mukherji et al.</p>
+                </div>
+              </li>
+
+            </ul>
+
+            <div style="margin-top: 2rem;">
+              <a href="https://uibk.academia.edu/SimoneWille" target="_blank" rel="noopener" class="btn btn-outline">View Full Publications List →</a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ In Progress ══ -->
+  <div id="in-progress" style="background: var(--white); max-width: 100%;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);">
+
+      <div class="section-header">
+        <span class="section-label">In Progress</span>
+        <h2 class="section-title">Current Research</h2>
+      </div>
+
+      <!-- Featured Research Project -->
+      <div class="section-body" style="margin-bottom: 4rem;">
+        <div><!-- spacer --></div>
+        <div class="about-text">
+          <h3 style="font-family: 'EB Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 1.25rem;">Modernism Reconsidered through the Académie André Lhote</h3>
+          <p style="font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem;">Featured Research Project</p>
+          <p>
+            In the years between World War I and World War II, the Académie Lhote attracted hundreds of art students from around the world. Among the many options beyond the traditional École des Beaux-Arts, Lhote's was the only studio that offered a strong and consistent theoretical framework for constructing a composition. He did not dictate style, but rather provided a method for translating the visual world to the flat canvas. While some students found his approach too rigid, the very existence of an intellectually rigorous procedure for artmaking stimulated artists to expand, resist, or build on his processes. His classes provided an entry point into modernism for hundreds of artists from around the world who then built on their experience at the Académie upon their return home.
+          </p>
+          <p>
+            Despite Lhote's impact on generations of artists, both his work and his teaching are generally treated as a footnote in histories of modernism because they counter canonical stories of the period. Because he does not fit neatly into the traditional modernist trajectory that requires constant innovation and a steady progression toward abstraction, Lhote and his Académie have generally been left out of histories of postwar European modernism. This workshop and book project seek to position André Lhote's role as a teacher and artist in the context of interwar and postwar European modernism, develop an understanding of the role played by his remote field academies, and sketch out a broad picture of the artistic outcome of his 1,900 students.
+          </p>
+        </div>
+      </div>
+
+      <!-- Work in Progress -->
+      <div class="section-body">
+        <div><!-- spacer --></div>
+        <div class="about-text">
+          <h3 style="font-family: 'EB Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 1.25rem;">The Cold War Archive in Prague: A Dynamic Site for Negotiating Postwar Modernism</h3>
+          <p style="font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem;">Work in Progress</p>
+          <p>
+            A new book provisionally entitled <em>The Cold War Archive in Prague: A Dynamic Site for Negotiating Postwar Modernism</em> is in the making and underway. This book is strongly connected with <em>Cold War Art Worlds: South Asian Art and Artists in Prague</em> (Leuven, 2025) in its archival scope and although it fills many gaps that <em>Cold War Art Worlds</em> could not publish, it is marked by incompleteness, rupture, imagination.
+          </p>
+          <div class="about-links">
+            <a href="https://www.uibk.ac.at/en/projects/south-asia-in-central-europe/" target="_blank" rel="noopener" class="btn btn-outline">Project Page at University of Innsbruck →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ Footer ══ -->
+  <footer>
+    <span class="footer-name">Simone Wille</span>
+    <span class="footer-copy">Institute of Art History · University of Innsbruck</span>
+  </footer>
+
+  <!-- Active nav highlight on scroll -->
+  <script>
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
